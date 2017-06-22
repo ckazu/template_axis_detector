@@ -8,6 +8,8 @@ import numpy as np
 parser = argparse.ArgumentParser(description="Detect template image from base image and return it's detected axis.")
 parser.add_argument('base_image_path', metavar='BaseImage', type=str, nargs='+', help='base image file path')
 parser.add_argument('template_image_path', metavar='TemplateImage', type=str, nargs='+', help='template image file path')
+parser.add_argument('-o', '--output', metavar='OutputImage', type=str, help='output image file path')
+
 args = parser.parse_args()
 
 # file check
@@ -31,3 +33,8 @@ top_left = max_loc
 center = (top_left[0] + w / 2, top_left[1] + h / 2)
 
 sys.stdout.write('{"x":%d,"y":%d}\n' % (round(center[0]), round(center[1])))
+
+if args.output:
+    bottom_right = (top_left[0] + w, top_left[1] + h)
+    cv2.rectangle(image, top_left, bottom_right, (0, 0, 255), 2)
+    cv2.imwrite(args.output, image)
