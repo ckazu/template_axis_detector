@@ -37,13 +37,13 @@ res = cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)
 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
 
 if max_val < args.matching_accuracy:
-    sys.stdout.write('{"matched":false}\n')
+    sys.stdout.write('{"matched":false,"max-accuracy":%f}\n' % max_val)
     sys.exit(0)
 
 top_left = max_loc
 center = (top_left[0] + w / 2, top_left[1] + h / 2)
 
-sys.stdout.write('{"matched":true,"x":%d,"y":%d}\n' % (round(center[0]), round(center[1])))
+sys.stdout.write('{"matched":true,"x":%d,"y":%d,"accuracy":%f}\n' % (round(center[0]), round(center[1]), max_val))
 
 if args.output:
     bottom_right = (top_left[0] + w, top_left[1] + h)
