@@ -43,7 +43,7 @@ if max_val < args.matching_accuracy:
 top_left = max_loc
 center = (top_left[0] + w / 2, top_left[1] + h / 2)
 
-sys.stdout.write('{"x":%d,"y":%d}\n' % (round(center[0]), round(center[1])))
+sys.stdout.write('{"matched":true,"x":%d,"y":%d}\n' % (round(center[0]), round(center[1])))
 
 if args.output:
     bottom_right = (top_left[0] + w, top_left[1] + h)
