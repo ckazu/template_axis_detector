@@ -12,10 +12,10 @@ def restricted_float(x):
     return x
 
 parser = argparse.ArgumentParser(description="Detect template image from base image and return it's detected axis.")
-parser.add_argument('base_image_path', metavar='BaseImage', type=str, nargs='+', help='base image file path')
-parser.add_argument('template_image_path', metavar='TemplateImage', type=str, nargs='+', help='template image file path')
+parser.add_argument('base_image_path', metavar='BaseImage', type=str, nargs='+', help="read base image file")
+parser.add_argument('template_image_path', metavar='TemplateImage', type=str, nargs='+', help="read template image file")
 parser.add_argument('--matching-accuracy', metavar='Accuracy', type=restricted_float, default=0.8, help='set the matching accuracy (default: 0.8)')
-parser.add_argument('-o', '--output', metavar='OutputImage', type=str, help='output image file path')
+parser.add_argument('-o', '--output', metavar='OutputImage', type=str, help='output result as composite image')
 
 args = parser.parse_args()
 
