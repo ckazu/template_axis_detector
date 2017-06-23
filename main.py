@@ -21,10 +21,10 @@ args = parser.parse_args()
 
 # file check
 if not(os.path.isfile(args.base_image_path[0])):
-    print('error: Could not find `BaseImage` file.')
+    sys.stderr.write('error: Could not find `BaseImage` file.\n')
     sys.exit(1)
 if not(os.path.isfile(args.template_image_path[0])):
-    print('error: Could not find `TemplateImage` file.')
+    sys.stderr.write('error: Could not find `TemplateImage` file.\n')
     sys.exit(1)
 
 # detect images
