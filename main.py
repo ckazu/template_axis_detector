@@ -5,9 +5,16 @@ import cv2
 import numpy as np
 
 # parse arguments
+def restricted_float(x):
+    x = float(x)
+    if x < 0.0 or x > 1.0:
+        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]" % (x,))
+    return x
+
 parser = argparse.ArgumentParser(description="Detect template image from base image and return it's detected axis.")
 parser.add_argument('base_image_path', metavar='BaseImage', type=str, nargs='+', help='base image file path')
 parser.add_argument('template_image_path', metavar='TemplateImage', type=str, nargs='+', help='template image file path')
+parser.add_argument('--matching-accuracy', metavar='Accuracy', type=restricted_float, default=0.8, help='set the matching accuracy (default: 0.8)')
 parser.add_argument('-o', '--output', metavar='OutputImage', type=str, help='output image file path')
 
 args = parser.parse_args()
@@ -28,6 +35,10 @@ w, h = template.shape[::-1]
 res = cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)
 
 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+
+if max_val < args.matching_accuracy:
+    sys.stdout.write('{"matched":false}\n')
+    sys.exit(0)
 
 top_left = max_loc
 center = (top_left[0] + w / 2, top_left[1] + h / 2)
